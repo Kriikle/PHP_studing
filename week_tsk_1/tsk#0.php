@@ -11,8 +11,9 @@ if (1==1) echo 'hi';
 ?>
 
 <?php
-//Config file input
-include 'config.php';//Igor is global so its in config php
+
+//User_name
+$user_name = "Igor" ;
 
 //Constanta for test using
 const TEST_CONSTANTA = 'asd';
@@ -26,8 +27,8 @@ function show_something_n(){
 	return 'SOMETHING';
 }
 
-if  (true){
-	echo 'hi';
-}
+//Echo file
+include 'echo_value.php';//smt value
+
 
 ?>
