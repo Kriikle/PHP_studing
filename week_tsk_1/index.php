@@ -1,5 +1,7 @@
 <?php
 
+require(‘src/functions.php’);
+
 echo task1(['ok','life','uno']);
 echo task1(['ok','life','uno'],true);
 
