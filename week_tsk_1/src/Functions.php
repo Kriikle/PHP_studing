@@ -61,12 +61,32 @@ function taskTwo(string $mathSymbol,...$numbers):float
     return $result;
 }
 
+//Задание #3 (Использование рекурсии не обязательно)
 
-
-
+//Функция должна принимать два параметра – целые числа.
+//Если в функцию передали 2 целых числа,
+// то функция должна отобразить таблицу умножения размером со значения параметров,
+//переданных в функцию. (Например если передано 8 и 8,
+//то нарисовать от 1х1 до 8х8). Таблица должна быть выполнена с использованием тега <table>
+//В остальных случаях выдавать корректную ошибку.
 function taskTree(int $a,int $b):string
 {
-    return $a+$b;
+    if ($a <= 0 or $b <= 0){
+
+        return "";
+    }
+    $resultString = "<table>";
+    for ($i = 1;$i <= $a;$i++) {
+        $resultString = $resultString . '<tr>';
+        for ($j = 1;$j <= $b;$j++) {
+            $num = $i * $j;
+            $resultString = $resultString . "<td> $num </td>";
+        }
+        $resultString = $resultString . '</tr>';
+    }
+    $resultString = $resultString . '</table>';
+
+    return $resultString;
 }
 
 
