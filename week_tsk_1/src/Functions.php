@@ -72,8 +72,8 @@ function taskTwo(string $mathSymbol,...$numbers):float
 function taskTree(int $a,int $b):string
 {
     if ($a <= 0 or $b <= 0){
-
-        return "";
+        trigger_error("Arguments must be positive");
+        return false;
     }
     $resultString = "<table>";
     for ($i = 1;$i <= $a;$i++) {
