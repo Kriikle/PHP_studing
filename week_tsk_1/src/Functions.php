@@ -69,22 +69,22 @@ function taskTwo(string $mathSymbol,...$numbers):float
 //переданных в функцию. (Например если передано 8 и 8,
 //то нарисовать от 1х1 до 8х8). Таблица должна быть выполнена с использованием тега <table>
 //В остальных случаях выдавать корректную ошибку.
-function taskTree(int $a,int $b):string
+function taskTree(int $a, int $b): string
 {
-    if ($a <= 0 or $b <= 0){
-        trigger_error("Arguments must be positive");
-        return false;
+    if ($a <= 0 || $b <= 0){
+        //Second arg is error *must have
+        trigger_error("Arguments must be positive", E_USER_ERROR);
     }
-    $resultString = "<table>";
-    for ($i = 1;$i <= $a;$i++) {
-        $resultString = $resultString . '<tr>';
-        for ($j = 1;$j <= $b;$j++) {
+    $resultString = '<table>';
+    for ($i = 1; $i <= $a; $i++) {
+        $resultString .=  '<tr>';
+        for ($j = 1; $j <= $b; $j++) {
             $num = $i * $j;
-            $resultString = $resultString . "<td> $num </td>";
+            $resultString .=  "<td> $num </td>";
         }
         $resultString = $resultString . '</tr>';
     }
-    $resultString = $resultString . '</table>';
+    $resultString .=  '</table>';
 
     return $resultString;
 }
@@ -94,16 +94,11 @@ function taskTree(int $a,int $b):string
 
 //Выведите информацию о текущей дате в формате 31.12.2016 23:59
 //Выведите unix time время соответствующее 24.02.2016 00:00:00.
-function taskFour(bool $isFirst = false):string
+function taskFour(): string
 {
-    if ($isFirst) {
-        $returnStatement =  date("dd.mm.yyyy hh:mm");
-    }
-    else {
-        $returnStatement = strtotime('24.02.2016 00:00:00');
-    }
+    $returnStatement =  date("d.m.Y h:m");
 
-    return $returnStatement . "\n";
+    return $returnStatement . "\n" . strtotime('24.02.2016 00:00:00');
 }
 
 
@@ -112,12 +107,12 @@ function taskFour(bool $isFirst = false):string
 
 //Дана строка: “Карл у Клары украл Кораллы”. Удалить из этой строки все заглавные буквы “К”.
 //Дана строка: “Две бутылки лимонада”. Заменить “Две”, на “Три”.
-function taskFive():string
+function taskFive(): string
 {
     $stringOne = "Карл у Клары украл Кораллы";
-    $stringOne = str_replace("К"," ",$stringOne);
+    $stringOne = str_replace("К", " ", $stringOne);
     $stringTwo = "Две бутылки лимонада";
-    $stringTwo = str_replace("Две","Три",$stringTwo);
+    $stringTwo = str_replace("Две", "Три", $stringTwo);
 
     return $stringOne . "\n" . $stringTwo . "\n";
 }
@@ -127,13 +122,13 @@ function taskFive():string
 
 //Создайте файл test.txt средствами PHP. Поместите в него текст - “Hello again!”
 //Напишите функцию, которая будет принимать имя файла, открывать файл и выводить содержимое на экран.
-function taskSix(string $file_name,bool $isCreateFile = true):string
+function taskSix(string $file_name, bool $isCreateFile = true): string
 {
     if ($isCreateFile) {
         //$fw = fopen("test.txt",'w+');
         //fwrite($fw,'Hello again!');
         //fclose($fw);
-        file_put_contents("test.txt",'Hello again!');
+        file_put_contents("test.txt", 'Hello again!');
     }
 
     return file_get_contents($file_name);

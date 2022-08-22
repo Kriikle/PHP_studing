@@ -23,15 +23,13 @@ echo "<br>";
 
 echo taskTree(10,5);
 echo "<br>";
-echo taskTree(0,-1);
+//echo taskTree(0,-1);//Error 
 echo "<br>";
 echo taskTree(4,4);
 echo "<br>";
 
 
 echo taskFour();
-echo "<br>";
-echo taskFour(true);
 echo "<br>";
 
 echo taskFive();
