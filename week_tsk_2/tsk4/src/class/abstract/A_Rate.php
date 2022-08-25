@@ -17,14 +17,14 @@ abstract class A_Rate implements IRate
     protected int $perTime = 0;
 
     //Результат
-    protected float $prize;
+    protected float $prize = 0;
 
     function __construct($distance, $time){
         $this->distance =  $distance;
         $this->time = $time;
     }
 
-    abstract public function addService($service);//Here adding service
+    abstract public function addService(object $service): string;//Here adding service
 
     //without service
     //only hourly not like this
@@ -32,14 +32,13 @@ abstract class A_Rate implements IRate
     {
         $sum = $this->distance * $this->perDistance;
         $sum += $this->time * $this->perTime;
-        $this->prize = $sum;
+        $this->prize += $sum;
     }
-
-    #one minute
-    public function addTick()
+    public function resetData(): void
     {
-        $this->distance += 1;//60km/h / 60
-        $this->time += 1;
+        $this->prize = 0;
+        $this->time = 0;
+        $this->distance =0;
     }
 
     public function getRateName(): string

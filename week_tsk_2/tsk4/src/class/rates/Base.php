@@ -10,8 +10,10 @@ class Base extends A_Rate
     protected int $perTime = 3;
 
 
-    public function addService($service)
+    public function addService(object $service): string
     {
-        // TODO: Implement addService() method.
+
+        $this->prize += $service->addServicePrize($this->time);
+        return $service->getServiceInfo();
     }
 }

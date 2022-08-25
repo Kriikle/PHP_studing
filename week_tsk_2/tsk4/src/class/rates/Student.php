@@ -12,8 +12,9 @@ class Student extends A_Rate
 
 
 
-    public function addService($service)
+    public function addService(object $service): string
     {
-        // TODO: Implement addService() method.
+        $this->prize += $service->addServicePrize($this->getTime());
+        return $service->getServiceInfo();
     }
 }

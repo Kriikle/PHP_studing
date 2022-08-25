@@ -2,5 +2,5 @@
 
 interface IRate {
     public function resultPrize();
-    public function addService($service);
+    public function addService(object $service);
 }
