@@ -1,7 +1,8 @@
 <?php
 
+
 /*
-This class emplements rate abstract class
+This class complements rate abstract class
 */
 abstract class A_Rate implements IRate
 {
@@ -19,8 +20,18 @@ abstract class A_Rate implements IRate
     #one minute
     public function addTick()
     {
-        $this->distance+= 1;//60km/h / 60
-        $this->time+= 1;
+        $this->distance += 1;//60km/h / 60
+        $this->time += 1;
+    }
+
+    public function getDistance(): int
+    {
+        return $this->distance;
+    }
+
+    public function getTime(): float
+    {
+        return $this->time;
     }
 }
 
