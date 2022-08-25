@@ -6,11 +6,11 @@
 
 class Student extends A_Rate
 {
+    protected string $title = "Студенческий";
+    protected int $perDistance = 4;
+    protected int $perTime = 1;
 
-    public function resultPrize()
-    {
-        // TODO: Implement resultPrize() method.
-    }
+
 
     public function addService($service)
     {

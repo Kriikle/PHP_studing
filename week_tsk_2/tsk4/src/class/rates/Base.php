@@ -5,11 +5,10 @@
 
 class Base extends A_Rate
 {
+    protected string $title = "Базовый";
+    protected int $perDistance = 10;
+    protected int $perTime = 3;
 
-    public function resultPrize()
-    {
-        // TODO: Implement resultPrize() method.
-    }
 
     public function addService($service)
     {
