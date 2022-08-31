@@ -1,16 +1,26 @@
 <?php
 
-include('src/functions.php');
+require('src/functions.php');
 
-$peoplePut = generatePeople(50);
-file_put_contents('users.json',json_encode($peoplePut,JSON_UNESCAPED_UNICODE));//Битовая маска в конце(кодировка)
-$peopleGet = (json_decode(file_get_contents('users.json')));
-//echo '<pre>';
-//print_r($peopleGet);
-//echo '</pre>';
-//$age = $peopleGet[0]->{'age'};//0 - номер обекта(зачем если есть id),age индификатор
-$sitisticPeople = countPeopleStisticks($peopleGet);
+//$UsersGeneratedPut = generateUserList(50);
+$UsersGeneratedPut = generateUserList();
+saveUserListToJsonFile('users.json',$UsersGeneratedPut);
+$UsersGeneratedGet = getUserListFromJsonFile('users.json');
+
+echo '<pre>';
+print_r($UsersGeneratedGet);
+echo '</pre>';
+
+
+echo "Средний возраст: ", usersMeanAgeCount($UsersGeneratedGet);
+
+echo '<pre>';
+print_r(userUniqueNamesCount($UsersGeneratedGet));
+echo '</pre>';
+
+/* Old
+$sitisticPeople = countPeopleStisticks($UsersGeneratedGet);
 echo '<pre>';
 print_r($sitisticPeople);
 echo '</pre>';
-
+*/

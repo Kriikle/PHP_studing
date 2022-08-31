@@ -1,5 +1,7 @@
 <?php
-function generatePeople(int $numOfPeople): array
+
+//
+function generateUserList(int $numberOfUsers = 50): array
 {
 	$names = [
 		'Карл',
@@ -15,35 +17,87 @@ function generatePeople(int $numOfPeople): array
 		'Даша',
 		'Надя'
 	];
-	$people = [];
-	for($i = 0; $i < $numOfPeople; $i++) {
-		$person = [
-			'id' => $i,
-			'name' => $names[rand(0, count($names)-1)],
-			'age' => rand(18, 45),
-			];
-		$people[] = $person;
+    $users = [];
+
+	for($i = 0; $i < $numberOfUsers; $i++) {
+		$users[] = [
+            'id' => $i,
+            'name' => $names[array_rand($names)],
+            'age' => rand(18, 45),
+        ];
 	}
 	
-	return $people;
+	return $users;
 }
 
-function countPeopleStisticks(array $people): array
+
+
+//Get\Put Functions to json file
+function saveUserListToJsonFile(string $fileName,array $users): void
+{
+    file_put_contents($fileName,json_encode($users,JSON_UNESCAPED_UNICODE));
+    //Битовая маска в конце(кодировка)
+}
+
+function getUserListFromJsonFile(string $fileName): array
+{
+
+    return json_decode(file_get_contents($fileName),true);
+}
+
+
+
+//Statistics functions
+function usersMeanAgeCount(array $users): float
+{
+    $age = 0;
+    $meanAge = 0;
+
+    foreach($users as $user) {
+        $age += $user['age'];
+    }
+
+    if ($age) {
+        $meanAge = $age / count($users);
+    }
+
+    return $meanAge;
+}
+
+function userUniqueNamesCount(array $users): array
+{
+    $namesCount = [];
+    foreach($users as $user) {
+        if (isset($namesCount[$user['name']])) {
+            $namesCount[$user['name']]++;
+        } else {
+            $namesCount[$user['name']] = 1;
+        }
+    }
+
+    return $namesCount;
+}
+
+
+/* Old
+function countPeopleStisticks(array $users): array
 {
 	$age = 0;
 	$namesCount = [];
 	$counter = 0;
-	foreach($people as $person) {
-		if (array_key_exists($person->{'name'}, $namesCount)) {
-			$namesCount[$person->{'name'}]++;
+
+	foreach($users as $user) {
+		if (isset($namesCount[$user['name']])) {
+			$namesCount[$user['name']]++;
 		}
+
 		else {
-			$namesCount[$person->{'name'}] = 1;
+			$namesCount[$user['name']] = 1;
 		}
-		$age += $person->{'age'};
+		$age += $user['age'];
 		$counter++;
 	}
 	
-	return ['meanAge'=> $age/ $counter,'namesCount'=>$namesCount];
+	return ['meanAge' => $age / $counter,'namesCount' =>$ namesCount];
 }
-
+*/
