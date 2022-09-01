@@ -1,77 +1,53 @@
 <?php
 
 include('connection.php');
-
+include('functions.php');
 
 $conn = OpenCon();
 
 
-function isGetSet(string $nameGet)
-{
-        if (isset($_GET[$nameGet])) {
-            if ($_GET[$nameGet] === "" ){
-
-                return 0;
-            }
-            return $_GET[$nameGet];
-        }
-        return 0;
-}
-
-
-
-
-    //Some flags
+//Some flags
 $callBackFlag = 0;
 $payMethodFlag = 0;
-
-    //Переменные
+//Переменные
+//User table
 $userName = isGetSet('name');
-$userPhone = isGetSet('phone');
+$userPhone = getPhoneNumber('phone');
 $userMail = isGetSet('email');
-
+//Order table
 $orderStreet = isGetSet('street');
 $orderHouse = isGetSet('home');
 $orderPart = isGetSet('part');
 $orderAppt = isGetSet('appt');
 $orderFloor = isGetSet('floor');
 $orderComment = isGetSet('Comment');
-
-    //CallbackFlag installation
+//CallbackFlag installation
 $callBackFlag = isGetSet('callback');
-if ($callBackFlag === 'on') {
-    $callBackFlag = 1;
+$callBackFlag = $callBackFlag === 'on' ? 1 : 0;
+
+
+if ($userPhone === 0 || !preg_match('/^[0-9]{11}+$/', $userPhone)) {
+    trigger_error("Номер телефона неверно указан", E_USER_ERROR);
 }
 
-
-
-if (!$callBackFlag) {
-    //TODO validate phone here
-    if ($userPhone === 0) {
-        echo 'Номер телефона неверно указан <br>';
-        exit();
-    }
+if ($userMail === 0 || !filter_var($userMail,FILTER_VALIDATE_EMAIL)) {
+    trigger_error("Email неверно указан", E_USER_ERROR);
 }
 
-
-
-//TODO validate email here
-if ($userMail === 0) {
-    echo 'Email неверно указан <br>';
-    exit();
-}
-
-//
-//TODO validate address here
 if ($orderStreet === 0 || $orderHouse === 0 || $orderFloor === 0 || $orderAppt === 0) {
-    echo 'Адрес неверно указан <br>';
-    exit();
+    trigger_error("Адрес неверно указан", E_USER_ERROR);
 }
+
+$deliveryFullAddress = $orderStreet . " Дом: " . $orderHouse;
+$deliveryFullAddress = ($orderPart !== 0) ?  $deliveryFullAddress. " Корпус: " .$orderPart : $deliveryFullAddress;
+$deliveryFullAddress .= " Этаж: " . $orderFloor;
+$deliveryFullAddress .= " Квартира: " . $orderAppt;
 
 //var_dump($orderStreet,$orderHouse,$orderPart,$orderFloor);
 //Sql commands
 $userId = 0;
 $userId = (mysqli_fetch_row( $conn->query("SELECT id_user FROM user WHERE Email like '$userMail'")));
+
 if (!isset($userId[0])) {
     $conn->query(
         "INSERT INTO `user` (`id_user`, `Email`, `Phone`, `Name`)"
@@ -79,7 +55,6 @@ if (!isset($userId[0])) {
     );
     $userId = (mysqli_fetch_row( $conn->query("SELECT id_user FROM user WHERE Email like '$userMail'")));
 }
-
 
 $conn->query(
     "INSERT INTO `orders` (`id_order`, `Street`, `Home`, `Appt`, `Floor`, `Coment`, `Paymethod`, `id_user`,`part`) "
@@ -90,11 +65,8 @@ $idOrder = mysqli_fetch_row($conn->query("SELECT MAX(id_order) FROM `orders`;"))
 $numOrders = mysqli_fetch_row($conn->query("SELECT COUNT(*) FROM `orders` WHERE id_user = $userId[0];"));
 
 //var_dump($numOrders);
-$deliveryPoint = $orderStreet . " Дом: " . $orderHouse;
-$deliveryPoint = ($orderPart !== 0) ?  $deliveryPoint. " Корпус: " .$orderPart : $deliveryPoint;
-$deliveryPoint .= " Этаж: " . $orderFloor;
-$deliveryPoint .= " Квартира: " . $orderAppt;
-echo "Спасибо, ваш заказ будет доставлен по адресу: $deliveryPoint <br>" ;
+
+echo "Спасибо, ваш заказ будет доставлен по адресу: $deliveryFullAddress <br>" ;
 echo "Номер вашего заказа: $idOrder[0] <br>";
 echo  "Это ваш $numOrders[0]-й заказ!";
 //http_redirect('index.html');
