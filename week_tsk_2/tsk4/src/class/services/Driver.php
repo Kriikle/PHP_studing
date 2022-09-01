@@ -12,10 +12,10 @@ class Driver implements IService
         return $this->info;
     }
 
-    public function addServicePrize(float $time): int
+    public function addServicePrize(?float $time): int
     {
-        //100 рублей единоразово
-        return 100;
+        //100*100 копеек единоразово
+        return 100*100;
     }
 
     /**
@@ -23,6 +23,7 @@ class Driver implements IService
      */
     public function getId(): int
     {
+
         return $this->id;
     }
 }
