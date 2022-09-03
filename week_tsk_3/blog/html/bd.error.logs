@@ -1,0 +1,12 @@
+Time error 2022-09-03 18:09:23 Error: Duplicate entry '321' for key 'Login'
+Time error 2022-09-03 18:09:03 Error: Duplicate entry '321' for key 'Login'
+Time error 2022-09-03 18:09:33 Error: Duplicate entry '321' for key 'Login'
+Time error 2022-09-03 19:09:18 Error: Cannot add or update a child row: a foreign key constraint fails (`blog`.`messege`, CONSTRAINT `messege_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Time error 2022-09-03 19:09:23 Error: Cannot add or update a child row: a foreign key constraint fails (`blog`.`messege`, CONSTRAINT `messege_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Time error 2022-09-03 19:09:37 Error: Cannot add or update a child row: a foreign key constraint fails (`blog`.`messege`, CONSTRAINT `messege_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Time error 2022-09-03 19:09:51 Error: Cannot add or update a child row: a foreign key constraint fails (`blog`.`messege`, CONSTRAINT `messege_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Time error 2022-09-03 19:09:53 Error: Cannot add or update a child row: a foreign key constraint fails (`blog`.`messege`, CONSTRAINT `messege_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Time error 2022-09-03 19:09:31 Error: Duplicate entry '321' for key 'Login'
+Time error 2022-09-03 19:09:31 Error: Cannot add or update a child row: a foreign key constraint fails (`blog`.`blog`, CONSTRAINT `messege_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Time error 2022-09-03 19:09:31 Error: Duplicate entry '321' for key 'Login'
+Time error 2022-09-03 19:09:31 Error: Duplicate entry '321' for key 'Login'

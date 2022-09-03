@@ -15,12 +15,14 @@ class User extends AbstractModel
     public function __construct(
         string $login,
         string $password,
-        string $city
+        string $city,
+        int $id = -1
     ) {
         $this->login = $login;
         $this->password = $password;
         $this->dateCreated = date(time());
         $this->city = $city;
+        $this->id = -1;
     }
 
     /**

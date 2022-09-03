@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Core\Db;
 
-class Message extends AbstractModel
+class BlogPost extends AbstractModel
 {
     private int  $id;
     private int $idUser;
@@ -82,14 +82,14 @@ class Message extends AbstractModel
 
     public function update(): void
     {
-        $updateQuery = "UPDATE `messege` SET `Name` = ?, `Text` = ? WHERE `messege`.`Mes_id` = $this->id";
+        $updateQuery = "UPDATE `blog` SET `Name` = ?, `Text` = ? WHERE `blog`.`Blog_id` = $this->id";
         $db = Db::getInstance();
         $db->executeQuery($updateQuery,$this->name,$this->text);
     }
 
     public function save(): void
     {
-        $insertQuery = 'INSERT INTO `messege` (`User_id`, `Name`, `Text`) VALUES (?,?,?);';
+        $insertQuery = 'INSERT INTO `blog` (`User_id`, `Name`, `Text`) VALUES (?,?,?);';
         $db = Db::getInstance();
         $db->executeQuery($insertQuery,$this->idUser,$this->name,$this->text);
         $this->setId($db->lastInsertId());

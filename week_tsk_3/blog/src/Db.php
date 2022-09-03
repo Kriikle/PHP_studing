@@ -40,24 +40,29 @@ class Db
 
         if (!isset($this->conn)) {
             $conn = new mysqli($dbHost, $dbUser, $dbPass,$db);
+
             if ($conn->connect_error) {
+                //$date = "Time error " . date("Y-m-d H:m:s", strtotime("now")) . " Error: ";
+                //$errorText = "db Connection failed: " . $conn->connect_error;
+                //file_put_contents('bd.error.logs', $date . $errorText  . "\n",FILE_APPEND);
                 die("db Connection failed: " . $conn->connect_error);
             } else{
                 $this->conn = $conn;
             }
         }
 
-
         return $this->conn;
     }
 
     function CloseCon(): void
     {
+
         $this->conn->close();
     }
 
     public function lastInsertId()
     {
+
         return $this->getConnection()->insert_id;
     }
 
@@ -66,13 +71,13 @@ class Db
     {
         $stmt = $this->getConnection()->prepare($query);
         $stmt->bind_param(str_repeat('s',count($params)), ...$params);
+
         try {
             $stmt->execute();
-            //file_put_contents('bd.logs', $stmt->get_result() . "\n");
-            print_r($stmt->get_result());
+            //file_put_contents('bd.logs', $stmt->get_result() . "\n",FILE_APPEND);
         } catch (mysqli_sql_exception  $e) {
-            echo $e->getMessage() ;
-            file_put_contents('bd.logs', $e->getMessage() . "\n");
+            $date = "Time error " . date("Y-m-d H:m:s", strtotime("now")) . " Error: ";
+            file_put_contents('bd.error.logs', $date . $e->getMessage() . "\n",FILE_APPEND);
         }
     }
 
