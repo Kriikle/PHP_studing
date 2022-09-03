@@ -6,12 +6,19 @@ use Core\Db;
 
 class Comments extends AbstractModel
 {
+    public function getOne()
+    {
+        // TODO: Implement getOne() method.
+    }
+
+    public function getAll()
+    {
+        // TODO: Implement getAll() method.
+    }
+
     public function update()
     {
-        $insertQuery = 'INSERT INTO `users` (`Login`, `Pasword`, `City`) VALUES (?,?,?);';
-        $db = Db::getInstance();
-        $db->executeQuery($insertQuery,$this->login,$this->password,$this->city);
-        $this->setId($db->lastInsertId());
+
     }
 
     public function save()

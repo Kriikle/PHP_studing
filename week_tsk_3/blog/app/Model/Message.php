@@ -8,6 +8,7 @@ class Message extends AbstractModel
 {
     private int  $id;
     private int $idUser;
+    private string $Date_created;
     private string $name;
     private string $text;
 
@@ -82,16 +83,29 @@ class Message extends AbstractModel
 
     public function update(): void
     {
-        $updateQuery = "UPDATE `messege` SET `Name` = ?, `Text` = ? WHERE `messege`.`Mes_id` = $this->id";
+        $updateQuery = "UPDATE `message` SET `name` = ?, `text` = ? WHERE `Message`.`Message_id` = $this->id";
         $db = Db::getInstance();
         $db->executeQuery($updateQuery,$this->name,$this->text);
     }
 
     public function save(): void
     {
-        $insertQuery = 'INSERT INTO `messege` (`User_id`, `Name`, `Text`) VALUES (?,?,?);';
+        $insertQuery = 'INSERT INTO `Message` (`user_id`, `name`, `text`) VALUES (?,?,?);';
         $db = Db::getInstance();
         $db->executeQuery($insertQuery,$this->idUser,$this->name,$this->text);
         $this->setId($db->lastInsertId());
+    }
+
+    public function getAll()
+    {
+        $selectQuery = 'Select * from blog';
+        $db = Db::getInstance();
+        $result = $db->executeSelectQuery($selectQuery);
+        print_r($result);
+    }
+
+    public function getOne()
+    {
+        // TODO: Implement getOne() method.
     }
 }

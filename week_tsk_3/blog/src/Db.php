@@ -81,5 +81,28 @@ class Db
         }
     }
 
+    public function executeSelectQuery(string $query,bool $isOneResult = false): ?array
+    {
+
+        try {
+            $result = $this->getConnection()->query($query);
+            if ($isOneResult){
+
+                return $result->fetch_array();
+
+            }else{
+
+                return $result->fetch_all(MYSQLI_ASSOC);
+            }
+
+            //file_put_contents('bd.logs', $stmt->get_result() . "\n",FILE_APPEND);
+        } catch (mysqli_sql_exception  $e) {
+            $date = "Time error " . date("Y-m-d H:m:s", strtotime("now")) . " Error: ";
+            file_put_contents('bd.error.logs', $date . $e->getMessage() . "\n",FILE_APPEND);
+        }
+
+        return NULL;
+    }
+
 
 }
