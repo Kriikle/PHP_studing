@@ -28,21 +28,27 @@ if ($user):
         </form>
 
 
-        <?php foreach ($this->posts as $message): ?>
-            <div class="message">
-                Пост создан:
-                <span class="date"><?=$message->getDateCreated();?> </span>
-                Автор:
-                <span class="date"><?=\App\Model\User::getById($message->getIdUser())->getLogin();?> </span>
-                <div class="text">
-                Название поста:
-                <?=htmlspecialchars(nl2br($message->getName()));?></div>
-                Текс поста:
-                <br>
-                <div class="text"><?=htmlspecialchars(nl2br($message->getText()));?></div>
-                <br>
-            </div>
-        <?php endforeach; ?>
+        <?php
+        if (isset($this->posts )){
+            foreach ($this->posts as $message):
+                ?>
+                <div class="message">
+                    Пост создан:
+                    <span class="date"><?=$message->getDateCreated();?> </span>
+                    Автор:
+                    <span class="date"><?=\App\Model\User::getById($message->getIdUser())->getLogin();?> </span>
+                    <div class="text">
+                    Название поста:
+                    <?=htmlspecialchars(nl2br($message->getName()));?></div>
+                    Текс поста:
+                    <br>
+                    <div class="text"><?=htmlspecialchars(nl2br($message->getText()));?></div>
+                    <br>
+                </div>
+            <?php endforeach; ?>
+        <?php } else { ?>
+        <p>Блог пока пуст </p>
+        <?php } ?>
 
     </div>
 <?php else: ?>
