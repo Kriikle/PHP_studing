@@ -1,0 +1,51 @@
+
+<html>
+<head>
+    <title>Блог</title>
+</head>
+<body>
+
+<?php
+/** @var \App\Model\User $user */
+$user = $this->user;
+?>
+
+<?php
+if ($user):
+    ?>
+    <div class="block">
+            <p>Вы вошли как <?=$user->getLogin();?></p>
+            <a href="/">Перейти на главную</a><br>
+            <a href="/usercontroller/logout">Выйти</a>
+        <h3>Блог</h3>
+        <h4>Добавить пост</h4>
+        <form action="/blog/addPost" method="post">
+            <div class="field">Название поста:</div> <input type="text" value="" name="name"><br>
+            Текст:<br>
+            <textarea style="width: 250px; height: 150px;" type="text" value="" name="text"></textarea><br><br>
+            Изображение: <input type="file" name="image"><br>
+            <input type="submit" value="Отправить">
+        </form>
+
+
+        <?php foreach ($this->posts as $message): ?>
+            <div class="message">
+                Пост создан:
+                <span class="date"><?=$message->getDateCreated();?> </span>
+                Автор:
+                <span class="date"><?=\App\Model\User::getById($message->getIdUser())->getLogin();?> </span>
+                <div class="text">
+                Название поста:
+                <?=htmlspecialchars(nl2br($message->getName()));?></div>
+                Текс поста:
+                <br>
+                <div class="text"><?=htmlspecialchars(nl2br($message->getText()));?></div>
+                <br>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+<?php else: ?>
+    <p>Вы не авторизованы</p>
+    <a href="/">Перейти на страницу авторизации/регистрации</a>
+<?php endif; ?>

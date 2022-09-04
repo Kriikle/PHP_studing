@@ -66,7 +66,7 @@ class Db
         return $this->getConnection()->insert_id;
     }
 
-    //Insert or update
+    //Insert or update or Delete
     public function executeQuery(string $query, ... $params): void
     {
         $stmt = $this->getConnection()->prepare($query);
@@ -77,7 +77,7 @@ class Db
             //file_put_contents('bd.logs', $stmt->get_result() . "\n",FILE_APPEND);
         } catch (mysqli_sql_exception  $e) {
             $date = "Time error " . date("Y-m-d H:m:s", strtotime("now")) . " Error: ";
-            file_put_contents('bd.error.logs', $date . $e->getMessage() . "\n",FILE_APPEND);
+            file_put_contents('log/bd.error.logs', $date . $e->getMessage() . "\n",FILE_APPEND);
         }
     }
 
@@ -98,11 +98,10 @@ class Db
             //file_put_contents('bd.logs', $stmt->get_result() . "\n",FILE_APPEND);
         } catch (mysqli_sql_exception  $e) {
             $date = "Time error " . date("Y-m-d H:m:s", strtotime("now")) . " Error: ";
-            file_put_contents('bd.error.logs', $date . $e->getMessage() . "\n",FILE_APPEND);
+            file_put_contents('log/bd.error.logs', $date . $e->getMessage() . "\n",FILE_APPEND);
         }
 
         return NULL;
     }
-
 
 }

@@ -13,6 +13,7 @@ class User extends AbstractModel
     private string $city;
     private string $email;
 
+
     public function __construct(
         string $email,
         string $login,
@@ -22,17 +23,17 @@ class User extends AbstractModel
     ) {
         $this->email = $email;
         $this->login = $login;
-        $this->password = self::setPasswordSha($password);
+        $this->password = $password;
         $this->city = $city;
-        $this->id = -1;
+        $this->id = $id;
     }
 
     /**
-     * @param int $id
+     * @return int
      */
-    public function setId(int $id): void
+    public function getId(): int
     {
-        $this->id = $id;
+        return $this->id;
     }
 
     /**
@@ -80,7 +81,7 @@ class User extends AbstractModel
      */
     public function setPassword(string $password): void
     {
-        $this->password = self::setPasswordSha($password);
+        $this->password = $password;
     }
 
     /**
@@ -103,23 +104,23 @@ class User extends AbstractModel
     {
         $insertQuery = 'INSERT INTO `users` (`email`,`login`, `password`, `city`) VALUES (?,?,?,?);';
         $db = Db::getInstance();
-        $db->executeQuery($insertQuery,$this->email,$this->login,$this->password,$this->city);
-        $this->setId($db->lastInsertId());
+        $db->executeQuery($insertQuery,$this->email,$this->login,self::setPasswordSha($this->password),$this->city);
+        $this->id = ($db->lastInsertId());
     }
 
     public function update(): void
     {
         $updateQuery = "UPDATE `users` SET `login` = ?, `password` = ?, `city` = ? WHERE `users`.`User_id` = $this->id";
         $db = Db::getInstance();
-        $db->executeQuery($updateQuery,$this->login,$this->password,$this->city);
+        $db->executeQuery($updateQuery,$this->login,self::setPasswordSha($this->password),$this->city);
     }
 
     public function setPasswordSha(string $password): string
     {
-        return hash('sha512', $password);;
+        return password_hash($password,PASSWORD_DEFAULT );
     }
 
-    public function getAll()
+    public static function getAll()
     {
         $selectQuery = 'Select * from users';
         $db = Db::getInstance();
@@ -129,7 +130,26 @@ class User extends AbstractModel
 
     public function getOne()
     {
-        // TODO: Implement getOne() method.
+
+    }
+    public static function getById(int $id): ?User
+    {
+        $db = Db::getInstance();
+        $data = $db->executeSelectQuery(
+            "SELECT * fROM `users` WHERE `user_id` = '$id'",
+            true
+        );
+
+        if (!$data) {
+
+            return null;
+        }
+
+        $user = new self($data['email'],$data['login'],$data['password'],$data['city']);
+        $user->id = $data['user_id'];
+        $user->dateCreated = $data['date_created'];
+
+        return $user;
     }
 
     public static function getByEmail(string $email): ?User
@@ -139,6 +159,7 @@ class User extends AbstractModel
             "SELECT * fROM `users` WHERE `email` like '$email'",
             true
         );
+
         if (!$data) {
 
             return null;
