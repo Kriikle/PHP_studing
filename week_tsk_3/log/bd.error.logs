@@ -29,3 +29,20 @@ Time error 2022-09-04 19:09:46 Error: Table 'blog.blog' doesn't exist
 Time error 2022-09-04 19:09:00 Error: Table 'blog.blog' doesn't exist
 Time error 2022-09-04 19:09:08 Error: Table 'blog.blog' doesn't exist
 Time error 2022-09-04 19:09:17 Error: Table 'blog.messege' doesn't exist
+Time error 2022-09-04 22:09:36 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:26 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:40 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:10 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:32 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:48 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:18 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:04 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:14 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:09 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:16 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:52 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:59 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:10 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:16 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:53 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:21 Error: Data too long for column 'image' at row 1

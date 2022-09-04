@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Model\Message;
+use http\Env\Response;
 
 class Blog extends AbstractController
 {
+
+
     public function index(): string
     {
         $msg = [
@@ -57,7 +60,8 @@ class Blog extends AbstractController
                     mkdir(__DIR__ . $path, 0777, true);
                 }
 
-                $target_file = $path . basename($_FILES["image"]["name"]);
+                $target_file = $path . md5(microtime() . rand(0, 9999)) . "." ;
+                $target_file .= basename($_FILES["image"]["type"]);
                 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
                 // Check if image file is a actual image or fake image
                 if(isset($_POST["submit"])) {
@@ -69,8 +73,9 @@ class Blog extends AbstractController
                         return $this->view->render('blog.phtml', $msg);
                     }
                     // Check if file already exists
-                    if (file_exists($target_file)) {
-
+                    while (file_exists($target_file)) {
+                        $target_file = $path . md5(microtime() . rand(0, 9999)) . ".";
+                        $target_file .= basename($_FILES["image"]["type"]);
                     }
                     // Check file size
                     if ($_FILES["image"]["size"] > 500000) {
@@ -95,5 +100,24 @@ class Blog extends AbstractController
         $msg['msg_error_post_form'] = 'Ошибка добавления';
 
         return $this->view->render('blog.phtml', $msg);
+    }
+
+    //http://localhost/blog/getMsgByUser?user_id=61
+    public function getMsgByUser()
+    {
+        if (isset($_GET['user_id'])){
+            header('Content-Type: application/json; charset=utf-8');
+            $data = ['response' => "HTTP/1.1 200 success"];
+            $data[] = Message::getMsgByUser(intval($_GET['user_id']));
+            json_encode($data,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+            print_r($data);
+        }
+        //?user_id=61
+        else {
+            $data = ['response' => "HTTP/1.1 550 user_id not implemented"];/** whatever you're serializing **/;
+            //header('Content-Type: application/json; charset=utf-8');
+            header('Content-Type: application/json; charset=utf-8');
+            print_r(json_encode($data,JSON_PRETTY_PRINT));
+        }
     }
 }

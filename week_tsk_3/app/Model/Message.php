@@ -159,6 +159,13 @@ class Message extends AbstractModel
         $db->executeQuery("DELETE FROM message WHERE `message_id` like ?",$id);
     }
 
+    public static function getMsgByUser(int $id): array
+    {
+        $db = Db::getInstance();
+
+        return $db->executeSelectQuery("SELECT * FROM message WHERE `user_id` = '$id' LIMIT 20",);
+    }
+
     public function getOne()
     {
         // TODO: Implement getOne() method.
