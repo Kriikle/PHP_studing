@@ -11,18 +11,35 @@ class Message extends AbstractModel
     private string $Date_created;
     private string $name;
     private string $text;
-    private string $image;
+    private ?string $image;
 
     /**
      * @param int $idUser
      * @param string $name
      * @param string $text
      */
-    public function __construct(int $idUser, string $name, string $text, string $image = NULL)
+    public function __construct(int $idUser, string $name, string $text, ?string $image = NULL)
     {
         $this->idUser = $idUser;
         $this->name = $name;
         $this->text = $text;
+        $this->image = $image;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
     }
 
     /**
@@ -31,6 +48,14 @@ class Message extends AbstractModel
     public function getDateCreated(): string
     {
         return $this->Date_created;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
 
@@ -100,9 +125,9 @@ class Message extends AbstractModel
 
     public function save(): void
     {
-        $insertQuery = 'INSERT INTO `Message` (`user_id`, `name`, `text`) VALUES (?,?,?);';
+        $insertQuery = 'INSERT INTO `Message` (`user_id`, `name`, `text`, `image`) VALUES (?,?,?,?);';
         $db = Db::getInstance();
-        $db->executeQuery($insertQuery,$this->idUser,$this->name,$this->text);
+        $db->executeQuery($insertQuery,$this->idUser,$this->name,$this->text,$this->image);
         $this->setId($db->lastInsertId());
     }
 
@@ -119,13 +144,19 @@ class Message extends AbstractModel
         }
 
         foreach ($data as $elem) {
-            $message = new self($elem['user_id'], $elem['name'], $elem['text']);
+            $message = new self($elem['user_id'], $elem['name'], $elem['text'],$elem['image']);
             $message->Date_created = $elem['date_created'];
             $message->id = $elem['message_id'];
             $messages[] = $message;
         }
 
         return $messages;
+    }
+
+    public static function deleteMsg(int $id)
+    {
+        $db = Db::getInstance();
+        $db->executeQuery("DELETE FROM message WHERE `message_id` like ?",$id);
     }
 
     public function getOne()

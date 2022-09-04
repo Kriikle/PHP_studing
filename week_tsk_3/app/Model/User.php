@@ -10,7 +10,7 @@ class User extends AbstractModel
     private string $login;
     private string $password;
     private string $dateCreated;
-    private string $city;
+    private ?string $city;
     private string $email;
 
 
@@ -170,5 +170,10 @@ class User extends AbstractModel
         $user->dateCreated = $data['date_created'];
 
         return $user;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->id === FC_ADMIN;
     }
 }

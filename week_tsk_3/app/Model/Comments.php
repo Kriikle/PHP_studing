@@ -11,7 +11,7 @@ class Comments extends AbstractModel
         // TODO: Implement getOne() method.
     }
 
-    public function getAll()
+    public static function getAll()
     {
         // TODO: Implement getAll() method.
     }

@@ -2,5 +2,6 @@
 /week_tsk_1/test.txt
 /week_tsk_2/tsk3.1/users.json
 /week_tsk_2/tsk3.2/burgers/backend/bdData.txt
-/week_tsk_3/log/
+/week_tsk_3/log/bd.error.logs
 /week_tsk_3/vendor/
+/week_tsk_3/uploads/

@@ -6,6 +6,8 @@ use App\Model\User;
 
 class UserController extends AbstractController
 {
+
+
     public function index()
     {
         return $this->view->render('main.phtml',[
@@ -17,6 +19,11 @@ class UserController extends AbstractController
 
     public function registerUser()
     {
+        $msg = [
+            'user' => NULL,
+            'msg_error_login' => NULL,
+            'msg_error_register' => NULL
+        ];
         if (
             isset($_POST['email']) &&
             isset($_POST['password']) &&
@@ -25,37 +32,31 @@ class UserController extends AbstractController
             isset($_POST['city'])
         ) {
             $email = (string) $_POST['email'];
+            if (!filter_var($email,FILTER_VALIDATE_EMAIL)){
+                $msg['msg_error_register'] = 'Email указан не верно';
+
+                return $this->view->render('main.phtml',$msg);
+            }
+
             if ($_POST['password'] !== $_POST['password2']){
-                return $this->view->render('main.phtml',[
-                    'user' => $this->getUser(),
-                    'msg_error_login' => NULL,
-                    'msg_error_register' => 'Password1 and Password2 not confirmed',
-                ]);
+                $msg['msg_error_register'] = 'Password1 and Password2 not confirmed';
+
+                return $this->view->render('main.phtml',$msg);
             }
             $password = $_POST['password'];
-            $login = $_POST['login'];
-            $city = $_POST['city'];
+            $login = htmlspecialchars($_POST['login']);
+            $city = htmlspecialchars($_POST['city']);
 
         } else {
 
-            return $this->view->render(
-                'main.phtml',
-                [
-                    'user' => $this->getUser(),
-                    'msg_error_login' => NULL,
-                    'msg_error_register' => 'Заполните поля',
-                ]
-            );
+            $msg['msg_error_register'] = 'Заполните поля';
+
+            return $this->view->render('main.phtml',$msg);
         }
         if (User::getByEmail($email) != NULL){
+            $msg['msg_error_register'] = 'email  уже занят';
 
-                return $this->view->render('main.phtml',
-                    [
-                    'user' => $this->getUser(),
-                    'msg_error_login' => NULL,
-                    'msg_error_register' => 'email  уже занят'
-                        ]
-                );
+            return $this->view->render('main.phtml',$msg);
         }
 
         $user = new User($email,$login,$password,$city);
@@ -66,32 +67,32 @@ class UserController extends AbstractController
 
     public function login()
     {
+        $msg = [
+            'user' => NULL,
+            'msg_error_login' => NULL,
+            'msg_error_register' => NULL
+        ];
+
         if (isset($_POST['email']) && isset($_POST['password'])) {
             $email = (string) $_POST['email'];
+            if (!filter_var($email,FILTER_VALIDATE_EMAIL)){
+                $msg['msg_error_login'] = 'Email указан не верно';
+
+                return $this->view->render('main.phtml',$msg);
+            }
             $password = $_POST['password'];
         } else {
+            $msg['msg_error_login'] = 'Заполните поля';
 
-            return $this->view->render(
-                'main.phtml',
-                [
-                    'user' => $this->getUser(),
-                    'msg_error_login' => 'Заполните поля',
-                    'msg_error_register' => NULL,
-                ]
-            );
+            return $this->view->render('main.phtml',$msg);
         }
         $user = User::getByEmail($_POST['email']);
 
         if ($user == NULL){
 
-            return $this->view->render(
-                'main.phtml',
-                [
-                    'user' => $this->getUser(),
-                    'msg_error_login' => 'Логин или пароль неверный',
-                    'msg_error_register' => NULL,
-                    ]
-            );
+            $msg['msg_error_login'] = 'Логин или пароль неверный';
+
+            return $this->view->render('main.phtml',$msg);
         }
 
         if (password_verify($password, $user->getPassword())) {
@@ -99,14 +100,9 @@ class UserController extends AbstractController
             $this->redirect('/');
         } else {
 
-            return $this->view->render(
-                'main.phtml',
-                [
-                    'user' => $this->getUser(),
-                    'msg_error_login' => 'Логин или пароль неверный',
-                    'msg_error_register' => NULL,
-                ]
-            );
+            $msg['msg_error_login'] = 'Логин или пароль неверный';
+
+            return $this->view->render('main.phtml',$msg);
         }
     }
 

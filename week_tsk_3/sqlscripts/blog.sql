@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
   `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(62) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(162) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`message_id`),
   KEY `User_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

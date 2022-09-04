@@ -6,7 +6,10 @@
 <body>
 
 <?php
-/** @var \App\Model\User $user */
+/** @var User $user */
+
+use App\Model\User;
+
 $user = $this->user;
 ?>
 
@@ -19,32 +22,44 @@ if ($user):
             <a href="/usercontroller/logout">Выйти</a>
         <h3>Блог</h3>
         <h4>Добавить пост</h4>
-        <form action="/blog/addPost" method="post">
+        <form action="/blog/addPost"  enctype="multipart/form-data" method="post">
             <div class="field">Название поста:</div> <input type="text" value="" name="name"><br>
             Текст:<br>
             <textarea style="width: 250px; height: 150px;" type="text" value="" name="text"></textarea><br><br>
             Изображение: <input type="file" name="image"><br>
-            <input type="submit" value="Отправить">
-        </form>
+            <input type="submit" value="Отправить" name="submit">
+        </form >
+        <?php if($this->msg_error_post_form != NULL){ ?><p style="color:red;"> <?= $this->msg_error_post_form;?> <p/><?php } ?>
 
 
         <?php
-        if (isset($this->posts )){
+        if ($this->posts != NULL){
             foreach ($this->posts as $message):
                 ?>
+
                 <div class="message">
                     Пост создан:
                     <span class="date"><?=$message->getDateCreated();?> </span>
                     Автор:
-                    <span class="date"><?=\App\Model\User::getById($message->getIdUser())->getLogin();?> </span>
+                    <span class="date"><?= User::getById($message->getIdUser())->getLogin();?> </span>
                     <div class="text">
                     Название поста:
-                    <?=htmlspecialchars(nl2br($message->getName()));?></div>
+                    <?=(nl2br($message->getName()));?></div>
                     Текс поста:
                     <br>
-                    <div class="text"><?=htmlspecialchars(nl2br($message->getText()));?></div>
+                    <div class="text"><?=(nl2br($message->getText()));?></div>
                     <br>
+                    <?php if($message->getImage() != NULL){ ?>
+                    <div class="image" ><img src ="<?=$message->getImage();?>"  width="500" height="600"></div>
+                    <?php } ?>
                 </div>
+                <?php if ($user->isAdmin()){  ?>
+                <form action="/blog/deletePost" method="post">
+                    <input type="text" value="<?=$message->getId();?>" name="id_blog" hidden="true"><br>
+                    <input type="submit" value="Удалить">
+                </form>
+
+                <?php   } ?>
             <?php endforeach; ?>
         <?php } else { ?>
         <p>Блог пока пуст </p>
