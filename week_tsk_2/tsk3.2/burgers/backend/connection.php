@@ -5,10 +5,10 @@ function OpenCon(): mysqli
 {
     $dbSettings = explode(';',file_get_contents('bdData.txt'));
 
-    $dbhost = "$dbSettings[0]";
-    $dbuser = "$dbSettings[1]";
-    $dbpass = "$dbSettings[2]";
-    $db = "$dbSettings[3]";
+    $dbhost = (string) $dbSettings[0];
+    $dbuser = (string) $dbSettings[1];
+    $dbpass = (string) $dbSettings[2];
+    $db = (string) $dbSettings[3];
 
 
     $conn = new mysqli($dbhost, $dbuser, $dbpass,$db);

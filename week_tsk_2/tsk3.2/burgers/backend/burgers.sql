@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 27 2022 г., 18:51
+-- Время создания: Сен 07 2022 г., 12:04
 -- Версия сервера: 5.7.38
--- Версия PHP: 7.1.33
+-- Версия PHP: 8.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- База данных: `burgers`
 --
+CREATE DATABASE IF NOT EXISTS `burgers` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `burgers`;
 
 -- --------------------------------------------------------
 
@@ -27,15 +29,18 @@ SET time_zone = "+00:00";
 -- Структура таблицы `orders`
 --
 
-CREATE TABLE `orders` (
-  `id_order` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id_order` bigint(20) NOT NULL AUTO_INCREMENT,
   `Street` varchar(62) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Home` tinyint(4) NOT NULL,
-  `Appt` tinyint(4) NOT NULL,
-  `Floor` tinyint(4) NOT NULL,
+  `Home` int(4) NOT NULL,
+  `Appt` int(4) NOT NULL,
+  `Floor` smallint(4) NOT NULL,
   `Coment` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `Paymethod` tinyint(1) NOT NULL,
-  `id_user` int(11) NOT NULL
+  `id_user` int(11) NOT NULL,
+  `part` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id_order`),
+  KEY `id_user` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -44,45 +49,13 @@ CREATE TABLE `orders` (
 -- Структура таблицы `user`
 --
 
-CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user` (
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
   `Email` varchar(78) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Phone` int(11) NOT NULL,
-  `Name` varchar(62) COLLATE utf8mb4_unicode_ci NOT NULL
+  `Phone` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Name` varchar(62) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Индексы сохранённых таблиц
---
-
---
--- Индексы таблицы `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id_order`),
-  ADD KEY `id_user` (`id_user`);
-
---
--- Индексы таблицы `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`);
-
---
--- AUTO_INCREMENT для сохранённых таблиц
---
-
---
--- AUTO_INCREMENT для таблицы `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `user`
---
-ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
