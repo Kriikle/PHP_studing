@@ -46,21 +46,35 @@ $deliveryFullAddress .= " Квартира: " . $orderAppt;
 //var_dump($orderStreet,$orderHouse,$orderPart,$orderFloor);
 //Sql commands
 $userId = 0;
-$userId = (mysqli_fetch_row( $conn->query("SELECT id_user FROM user WHERE Email like '$userMail'")));
+$userId = mysqli_fetch_row($conn->query(
+    sprintf("SELECT id_user FROM user WHERE Email like '%s'",$userMail))
+);
 
 if (!isset($userId[0])) {
-    $conn->query(
-        "INSERT INTO `user` (`id_user`, `Email`, `Phone`, `Name`)"
-        . "VALUES (NULL, '$userMail', '$userPhone', '$userName');"
+    $conn->query(sprintf(
+        "INSERT INTO `user` (`Email`, `Phone`, `Name`) VALUES ('%s', '%s', '%s');",
+        $userMail,
+        $userPhone,
+        $userName)
     );
-    $userId = (mysqli_fetch_row( $conn->query("SELECT id_user FROM user WHERE Email like '$userMail'")));
+    $userId = mysqli_fetch_row($conn->query(
+        sprintf("SELECT id_user FROM user WHERE Email like '%s'",$userMail))
+    );
 }
 
-$conn->query(
-    "INSERT INTO `orders` (`id_order`, `Street`, `Home`, `Appt`, `Floor`, `Coment`, `Paymethod`, `id_user`,`part`) "
-    ." VALUES (NULL, '$orderStreet', '$orderHouse', '$orderAppt', '$orderFloor', "
-    ."'$orderComment', '$payMethodFlag', '$userId[0]','$orderPart')"
-);
+$query = "INSERT INTO `orders` (`Street`, `Home`, `Appt`, `Floor`, `Coment`, `Paymethod`, `id_user`,`part`) ";
+$query .= "VALUES ('%s', '%s', '%s', '%s', '%s' , '%s' , '%s', '%s')";
+$conn->query(sprintf(
+        $query,
+        $orderStreet,
+        $orderHouse,
+        $orderAppt,
+        $orderFloor,
+        $orderComment,
+        $payMethodFlag,
+        $userId[0],
+        $orderPart
+    ));
 $idOrder = mysqli_fetch_row($conn->query("SELECT MAX(id_order) FROM `orders`;"));
 $numOrders = mysqli_fetch_row($conn->query("SELECT COUNT(*) FROM `orders` WHERE id_user = $userId[0];"));
 
