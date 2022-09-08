@@ -5,25 +5,38 @@ include('functions.php');
 
 $conn = OpenCon();
 
-
+$arr = [
+    'name' => '',
+    'email' => '',
+    'street' => '',
+    'home' => '',
+    'part' => '',
+    'appt' => '',
+    'floor' => '',
+    'Comment' => '',
+    'callback' => ''
+];
+foreach ($arr as $name => $item) {
+    $arr[$name] = isgetSet($name);
+}
 //Some flags
-$callBackFlag = 0;
-$payMethodFlag = 0;
+$isCallBackRequired = 0;
+$isPayMethodChoice = 0;
 //Переменные
 //User table
-$userName = isGetSet('name');
+$userName = $arr['name'];
 $userPhone = getPhoneNumber('phone');
-$userMail = isGetSet('email');
+$userMail = $arr['email'];
 //Order table
-$orderStreet = isGetSet('street');
-$orderHouse = isGetSet('home');
-$orderPart = isGetSet('part');
-$orderAppt = isGetSet('appt');
-$orderFloor = isGetSet('floor');
-$orderComment = isGetSet('Comment');
+$orderStreet = $arr['street'];
+$orderHouse = $arr['home'];
+$orderPart = $arr['part'];
+$orderAppt = $arr['appt'];
+$orderFloor = $arr['floor'];
+$orderComment = $arr['Comment'];
 //CallbackFlag installation
-$callBackFlag = isGetSet('callback');
-$callBackFlag = $callBackFlag === 'on' ? 1 : 0;
+$isCallBackRequired = $arr['callback'];
+$isCallBackRequired = $isCallBackRequired === 'on' ? 1 : 0;
 
 
 if ($userPhone === 0 || !preg_match('/^[0-9]{11}+$/', $userPhone)) {
@@ -42,12 +55,11 @@ $deliveryFullAddress = $orderStreet . " Дом: " . $orderHouse;
 $deliveryFullAddress = ($orderPart !== 0) ?  $deliveryFullAddress. " Корпус: " .$orderPart : $deliveryFullAddress;
 $deliveryFullAddress .= " Этаж: " . $orderFloor;
 $deliveryFullAddress .= " Квартира: " . $orderAppt;
-
 //var_dump($orderStreet,$orderHouse,$orderPart,$orderFloor);
 //Sql commands
 $userId = 0;
 $userId = mysqli_fetch_row($conn->query(
-    sprintf("SELECT id_user FROM user WHERE Email like '%s'",$userMail))
+    sprintf("SELECT id_user FROM user WHERE Email like '%s'", $userMail))
 );
 
 if (!isset($userId[0])) {
@@ -58,7 +70,7 @@ if (!isset($userId[0])) {
         $userName)
     );
     $userId = mysqli_fetch_row($conn->query(
-        sprintf("SELECT id_user FROM user WHERE Email like '%s'",$userMail))
+        sprintf("SELECT id_user FROM user WHERE Email like '%s'", $userMail))
     );
 }
 
@@ -71,19 +83,16 @@ $conn->query(sprintf(
         $orderAppt,
         $orderFloor,
         $orderComment,
-        $payMethodFlag,
+        $isPayMethodChoice,
         $userId[0],
         $orderPart
     ));
 $idOrder = mysqli_fetch_row($conn->query("SELECT MAX(id_order) FROM `orders`;"));
 $numOrders = mysqli_fetch_row($conn->query("SELECT COUNT(*) FROM `orders` WHERE id_user = $userId[0];"));
-
 //var_dump($numOrders);
-
 echo "Спасибо, ваш заказ будет доставлен по адресу: $deliveryFullAddress <br>" ;
 echo "Номер вашего заказа: $idOrder[0] <br>";
 echo  "Это ваш $numOrders[0]-й заказ!";
-//http_redirect('index.html');
 CloseCon($conn);
 
 
