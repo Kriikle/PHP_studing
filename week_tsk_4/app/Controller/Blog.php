@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+
 use App\Model\Message;
 use http\Env\Response;
+// import the Intervention Image Manager Class
+use Intervention\Image\ImageManagerStatic as Image;
 
 class Blog extends AbstractController
 {
@@ -84,6 +87,16 @@ class Blog extends AbstractController
                         return $this->view->render('blog.phtml', $msg);
                     }
                     move_uploaded_file($_FILES["image"]["tmp_name"], __DIR__ . $target_file);
+
+                    // open an image file
+                    $img = Image::make(__DIR__ . $target_file);
+                    // now you are able to resize the instance
+                    $img->resize(320, 240);
+                    // and insert a watermark for example
+                    $img->insert(__DIR__ . $path . 'watermark.png');
+                    // finally we save the image as a file
+                    $img->save(__DIR__ . $target_file);
+
                     $image = $target_file;
                 }
 
