@@ -1,0 +1,52 @@
+<html>
+<head>
+
+</head>
+<body>
+
+<?php
+/** @var User $user */
+
+use App\Model\User;
+
+$user = $this->user;
+
+?>
+
+
+    <?php
+    if (!$user):
+    ?>
+    <div class="block">
+        <h3>Зарегистрироваться</h3>
+        <form action="/usercontroller/registeruser" method="post">
+            <div class="field">Login:</div> <input type="text" value="" name="login"><br>
+            <div class="field">Email:</div> <input type="text" value="" name="email"><br>
+            <div class="field">Password:</div> <input type="text" value="" name="password"><br>
+            <div class="field">Confirm Password:</div> <input type="text" value="" name="password2"><br>
+            <div class="field">City:</div> <input type="text" value="" name="city"><br>
+            <input type="submit" value="Зарегистрироваться">
+            <?php if($this->msg_error_register != NULL){ ?><p style="color:red;"> <?= $this->msg_error_register;?> <p/><?php } ?>
+        </form>
+    </div>
+
+    <div class="block" style="margin-left: 50px;">
+        <h3>Войти</h3>
+        <form action="/usercontroller/login" method="post">
+            <div class="field">Email:</div> <input type="text" value="" name="email"><br>
+            <div class="field">Password:</div> <input type="text" value="" name="password"><br>
+            <input type="submit" value="Войти">
+            <?php if($this->msg_error_login != NULL){ ?><p style="color:red;"> <?= $this->msg_error_login;?> <p/><?php } ?>
+        </form>
+
+    </div>
+    <?php else: ?>
+        <p>Вы вошли как <?=$user->getLogin();?></p>
+        <a href="/blog">Перейти в блог</a><br>
+        <a href="/usercontroller/logout">Выйти</a>
+    <?php endif; ?>
+
+
+</body>
+</head>
+</html>

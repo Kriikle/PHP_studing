@@ -1,0 +1,48 @@
+Time error 2022-09-04 18:09:21 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:34 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:32 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:58 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:47 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:20 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:41 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:02 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:39 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:32 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:45 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:33 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:52 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:43 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:23 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:38 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:07 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:17 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:30 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:35 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:49 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 18:09:18 Error: Duplicate entry 'bonykirill@mail.ru2' for key 'Email'
+Time error 2022-09-04 19:09:48 Error: Cannot add or update a child row: a foreign key constraint fails (`blog`.`message`, CONSTRAINT `messege_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Time error 2022-09-04 19:09:56 Error: Cannot add or update a child row: a foreign key constraint fails (`blog`.`message`, CONSTRAINT `messege_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Time error 2022-09-04 19:09:24 Error: Cannot add or update a child row: a foreign key constraint fails (`blog`.`message`, CONSTRAINT `messege_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Time error 2022-09-04 19:09:56 Error: Unknown column 'id_user' in 'where clause'
+Time error 2022-09-04 19:09:57 Error: Unknown column 'id_user' in 'where clause'
+Time error 2022-09-04 19:09:46 Error: Table 'blog.blog' doesn't exist
+Time error 2022-09-04 19:09:00 Error: Table 'blog.blog' doesn't exist
+Time error 2022-09-04 19:09:08 Error: Table 'blog.blog' doesn't exist
+Time error 2022-09-04 19:09:17 Error: Table 'blog.messege' doesn't exist
+Time error 2022-09-04 22:09:36 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:26 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:40 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:10 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:32 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:48 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:18 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:04 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:14 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:09 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:16 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:52 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:59 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:10 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:16 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:53 Error: Data too long for column 'image' at row 1
+Time error 2022-09-04 22:09:21 Error: Data too long for column 'image' at row 1
