@@ -3,6 +3,8 @@
 include 'vendor/autoload.php';
 include 'src/config.php';
 
+
+
 $route = new \Core\Route();
 $route->add('/', \App\Controller\UserController::class);
 

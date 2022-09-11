@@ -14,20 +14,17 @@ class Blog extends AbstractController
 
     public function index(): string
     {
-        $msg = [
-            'user' => NULL,
-            'posts' => NULL,
-            'msg_error_post_form' => NULL,
-        ];
-
+        $loader = new \Twig\Loader\FilesystemLoader('App\View');
+        $twig = new \Twig\Environment($loader);
+        $template = $twig->load('blog.html');
         $user = $this->getUser();
+        $posts = NULL;
 
         if ($user!= NULL) {
-            $msg['user'] = $user;
-            $msg['posts'] = Message::getAll();
+            $posts = Message::getAll();
         }
 
-        return $this->view->render('blog.phtml', $msg);
+        return $template->render(['user' => $user,'active_page' => 'blog','posts' => $posts]);
     }
 
     public function deletePost(): void
@@ -37,16 +34,20 @@ class Blog extends AbstractController
                 Message::deleteMsg($_POST['id_blog']);
             }
         }
+
         $this->redirect('/blog');
     }
 
     public function addPost(): string
     {
-        $msg = [
-            'user' => $this->getUser(),
-            'posts' => Message::getAll(),
-            'msg_error_post_form' => NULL,
-        ];
+        $loader = new \Twig\Loader\FilesystemLoader('App\View');
+        $twig = new \Twig\Environment($loader);
+        $template = $twig->load('blog.html');
+        $posts = NULL;
+        $user = $this->getUser();
+        if ($user!= NULL) {
+            $posts = Message::getAll();
+        }
 
         if (isset($_POST['name']) && isset($_POST['text'])) {
 
@@ -71,9 +72,13 @@ class Blog extends AbstractController
                     $check = getimagesize($_FILES["image"]["tmp_name"]);
 
                     if(!getimagesize($_FILES["image"]["tmp_name"])) {
-                        $msg['msg_error_post_form'] =  "File is not an image.";
 
-                        return $this->view->render('blog.phtml', $msg);
+                        return $template->render([
+                            'user' => $user,
+                            'active_page' => 'blog',
+                            'posts' => $posts,
+                            'msg_error_post_form' => "File is not an image."
+                        ]);
                     }
                     // Check if file already exists
                     while (file_exists($target_file)) {
@@ -82,16 +87,20 @@ class Blog extends AbstractController
                     }
                     // Check file size
                     if ($_FILES["image"]["size"] > 500000) {
-                        $msg['msg_error_post_form'] =  "Sorry, your file is too large.";
 
-                        return $this->view->render('blog.phtml', $msg);
+                        return $template->render([
+                            'user' => $user,
+                            'active_page' => 'blog',
+                            'posts' => $posts,
+                            'msg_error_post_form' => "Sorry, your file is too large."
+                        ]);
                     }
                     move_uploaded_file($_FILES["image"]["tmp_name"], __DIR__ . $target_file);
 
                     // open an image file
                     $img = Image::make(__DIR__ . $target_file);
                     // now you are able to resize the instance
-                    $img->resize(320, 240);
+                    $img->resize(200, 100);
                     // and insert a watermark for example
                     $img->insert(__DIR__ . $path . 'watermark.png');
                     // finally we save the image as a file
@@ -105,14 +114,22 @@ class Blog extends AbstractController
                 $blogNew->save();
                 $this->redirect('/blog');
             } else {
-                $msg['msg_error_post_form'] = 'Заполните поля';
 
-                return $this->view->render('blog.phtml', $msg);
+                return $template->render([
+                    'user' => $user,
+                    'active_page' => 'blog',
+                    'posts' => $posts,
+                    'msg_error_post_form' => 'Заполните поля'
+                ]);
             }
         }
-        $msg['msg_error_post_form'] = 'Ошибка добавления';
 
-        return $this->view->render('blog.phtml', $msg);
+        return $template->render([
+            'user' => $user,
+            'active_page' => 'blog',
+            'posts' => $posts,
+            'msg_error_post_form' => 'Ошибка добавления'
+        ]);
     }
 
     //http://localhost/blog/getMsgByUser?user_id=61

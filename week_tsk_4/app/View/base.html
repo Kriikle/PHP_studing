@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<header>
+
+    <!-- <link rel="stylesheet" type="text/css" href="static/style.css"> -->
+    {% block head %}
+        <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+</header>
+<body>
+    <div id="topnav" class="topnav">
+        <nav>
+            <a  class="{% if active_page == 'main' %}  active  {% endif %}" href = "/"> Страница авторизации</a>
+            {% if user != NULL %}<a  class="{% if active_page == 'blog' %}  active  {% endif %}" href = "/blog"> Перейти в блог</a>{% endif %}
+        </nav>
+    </div>
+    <div>
+        {% if user != NULL %}
+        <p>Вы вошли как {{ user.getLogin() }}</p>
+        <a href="/usercontroller/logout">Выйти</a>
+        {% endif %}
+    </div>
+
+    <div id="content">{% block content %}{% endblock %}</div>
+    {% block footer %}
+        &copy; Copyright 2011 by <a href="http://localhost">you</a>.
+    {% endblock %}
+</body>
+</html>
+
+
