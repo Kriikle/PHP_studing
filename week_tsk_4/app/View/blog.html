@@ -42,7 +42,7 @@
       </div>
       {% if user.isAdmin() %}
       <form action="/blog/deletePost" method="post">
-        <input type="text" value="<?=$message->getId();?>" name="id_blog" hidden="true"><br>
+        <input type="text" value="{{ post.getId() }}" name="id_blog" hidden="true"><br>
         <input type="submit" value="Удалить">
       </form>
       {% endif %}
