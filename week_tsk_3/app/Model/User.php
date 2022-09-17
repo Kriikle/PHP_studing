@@ -115,7 +115,7 @@ class User extends AbstractModel
         $db->executeQuery($updateQuery,$this->login,self::setPasswordSha($this->password),$this->city);
     }
 
-    public function setPasswordSha(string $password): string
+    public static function setPasswordSha(string $password): string
     {
         return password_hash($password,PASSWORD_DEFAULT );
     }
@@ -125,7 +125,7 @@ class User extends AbstractModel
         $selectQuery = 'Select * from users';
         $db = Db::getInstance();
         $result = $db->executeSelectQuery($selectQuery);
-        print_r($result);
+        return $result;
     }
 
     public function getOne()
