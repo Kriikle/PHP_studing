@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+
+    </style>
+
 </head>
 <body>
+<h1>Admin panel
+</h1>
 {% if user_auth != NULL %}
+{% if user_auth.isAdmin() %}
 <div>
     <h2>Register user</h2>
     <div class="block" style="margin-left: 50px;">
         <h3>Зарегистрироваться</h3>
-        <form action="/usercontroller/registeruser" method="post">
+        <form action="/admin/registeruser" method="post">
             <div class="field">Login:</div> <input type="text" value="" name="login"><br>
             <div class="field">Email:</div> <input type="text" value="" name="email"><br>
             <div class="field">Password:</div> <input type="text" value="" name="password"><br>
@@ -19,13 +26,55 @@
         </form>
     </div>
 </div>
+</br>
+</br>
+<table>
+    <tr>
+        <td>id
+        </td>
+        <td>Login
+        </td>
+        <td>Emial
+        </td>
+        <td> Новый пароль
+        </td>
+        <td>created_at
+        </td>
+        <td>updated_at
+        </td>
+    </tr>
 {% for user in users %}
-<tr>
-    {{ user.login }}
-    {{ user.email }}
 
+<tr>
+
+    <form action="/Admin/updateUser" method="post">
+        <td>{{ user.id }}</td>
+        <input type="text" value="{{ user.id }}" name="id_user" hidden="true"><br>
+        <td><div class="field">Login:</div> <input type="text" value="{{ user.login }}" name="login"></td>
+        <td><div class="field">Email:</div> <input type="text" value="{{ user.email }}" name="email"></td>
+        <td><div class="field">Password:</div> <input type="text" value="" name="password"></td>
+        <td>{{ user.created_at }}
+        </td>
+        <td>{{ user.updated_at }}
+        </td>
+        <td><input type="submit" value="Изменить"></td>
+        {% if msg_error_register != NULL %} <p style="color:red;">{{ msg_error_register }} {% endif %}
+    </form>
+
+
+    <td>
+
+    <form action="/admin/deleteUser" method="post">
+        <input type="submit" value="Удалить">
+        <input type="text" value="{{ user.id }}" name="id_user_del" hidden="true"><br>
+    </form>
+
+    </td>
 </tr>
+
 {% endfor %}
+</table>
+{% endif %}
 {% endif %}
 </body>
 </html>

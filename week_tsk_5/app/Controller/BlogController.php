@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+
 use App\Model\Blog;
 use http\Env\Response;
 // import the Intervention Image Manager Class
@@ -33,7 +34,7 @@ class BlogController extends AbstractController
     {
         if ($this->getUser()->isAdmin()){
             if (isset($_POST['id_blog'])){
-                Blog::deleteMsg($_POST['id_blog']);
+                Blog::where('id',$_POST['id_blog'])->delete();
             }
         }
 

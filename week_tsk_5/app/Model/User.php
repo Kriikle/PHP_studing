@@ -26,7 +26,7 @@ class User extends Eloquent
 
     function isAdmin(): bool
     {
-        if ($this->id = FC_ADMIN){
+        if ($this->id == FC_ADMIN){
 
             return true;
         }
