@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if user_auth != NULL %}
+<div>
+    <h2>Register user</h2>
+    <div class="block" style="margin-left: 50px;">
+        <h3>Зарегистрироваться</h3>
+        <form action="/usercontroller/registeruser" method="post">
+            <div class="field">Login:</div> <input type="text" value="" name="login"><br>
+            <div class="field">Email:</div> <input type="text" value="" name="email"><br>
+            <div class="field">Password:</div> <input type="text" value="" name="password"><br>
+            <input type="submit" value="Зарегистрироваться">
+            {% if msg_error_register != NULL %} <p style="color:red;">{{ msg_error_register }} {% endif %}
+        </form>
+    </div>
+</div>
+{% for user in users %}
+<tr>
+    {{ user.login }}
+    {{ user.email }}
+
+</tr>
+{% endfor %}
+{% endif %}
+</body>
+</html>

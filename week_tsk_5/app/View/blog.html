@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Main{% endblock %}
+{% block head %}
+{{ parent() }}
+<style type="text/css">
+  .important { color: #336699; }
+</style>
+{% endblock %}
+{% block content %}
+<h1>Blog</h1>
+{% if user != NULL %}
+<div class="block">
+  <h4>Добавить пост</h4>
+  <form action="/blogcontroller/addPost"  enctype="multipart/form-data" method="post">
+    <div class="field">Название поста:</div> <input type="text" value="" name="name"><br>
+    Текст:<br>
+    <textarea style="width: 250px; height: 150px;" type="text" value="" name="text"></textarea><br><br>
+    Изображение: <input type="file" name="image"><br>
+    <input type="submit" value="Отправить" name="submit">
+  </form >
+  {% if msg_error_post_form != NULL %} <p style="color:red;">{{ msg_error_register }} {% endif %}
+
+
+  {% if posts != NULL %}
+    {% for post in posts %}
+      <div class="message">
+        Пост создан:
+        <span class="date">{{ post.created_at }}</span>
+        Автор:
+        <span class="date"> {{ post.getUserLogin() }}</span>
+        <div class="text">
+          Название поста:
+          {{ post.name }} </div>
+        Текс поста:
+        <br>
+        <div class="text">{{ post.text }}</div>
+        <br>
+        {% if  post.image != NULL %}
+        <div class="image" ><img src ="{{ post.image }}" alt="ger"></div>
+        {% endif %}
+      </div>
+      {% if user.isAdmin() %}
+      <form action="/blogcontroller/deletePost" method="post">
+        <input type="text" value="{{ post.id }}" name="id_blog" hidden="true"><br>
+        <input type="submit" value="Удалить">
+      </form>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <p>Блог пока пуст </p>
+  {% endif %}
+
+</div>
+{% endif %}
+{% endblock %}
