@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Resources\CategoryResourse;
+use App\Http\Resources\ProductResourse;
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +18,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+Route::get('/', [App\Http\Controllers\ProductsController::class, 'index'])->name('products');
+Route::get('/home', [App\Http\Controllers\ProductsController::class, 'index'])->name('products');
+
+//Auth
 Auth::routes();
+//View
+Route::get('/products', [App\Http\Controllers\ProductsController::class, 'index'])
+    ->name('products');
+Route::get('/products/{id}', [App\Http\Controllers\ProductsController::class, 'productById'])
+    ->name('products');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/makeOrder', [App\Http\Controllers\OrderController::class, 'makeOrder'])
+    ->name('order');
+Route::get('/cart', [App\Http\Controllers\OrderController::class, 'myOrders'])
+    ->name('order');
 
-Auth::routes();
+Route::get('/about', [App\Http\Controllers\HomeController::class, 'index'])->name('about');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
