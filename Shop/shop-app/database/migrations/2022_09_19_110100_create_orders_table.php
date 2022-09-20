@@ -27,6 +27,8 @@ return new class extends Migration
                 ->on('products')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->string('status');
+            $table->bigInteger('prize');
             $table->timestamps();
         });
     }

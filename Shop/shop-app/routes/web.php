@@ -29,12 +29,14 @@ Route::get('/products', [App\Http\Controllers\ProductsController::class, 'index'
     ->name('products');
 Route::get('/products/{id}', [App\Http\Controllers\ProductsController::class, 'productById'])
     ->name('products');
-
+//Orders
 Route::get('/makeOrder', [App\Http\Controllers\OrderController::class, 'makeOrder'])
+    ->name('order');
+Route::post('/cancelOrder', [App\Http\Controllers\OrderController::class, 'cancelOrder'])
     ->name('order');
 Route::get('/cart', [App\Http\Controllers\OrderController::class, 'myOrders'])
     ->name('order');
-
+//About
 Route::get('/about', [App\Http\Controllers\HomeController::class, 'index'])->name('about');
 
 

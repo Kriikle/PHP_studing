@@ -4,27 +4,33 @@
 
 
 
+    @vite(['resources/css/Catalog.css'])
+
 
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Goods list') }}</div>
-                <div class="card-body">
-
-                    @foreach ($products as $product)
-                        <p>Product num: {{ $product->id }}, Product name: {{ $product->name }}</p>
-                        <p>Prize: {{ $product->prize / 100 }}$</p>
-                        <img src="{{ $product->img }}" style="height: 127px;width: 200px">
-                        <p><a href="/products/{{ $product->id  }}">Description</a></p>
-                        <hr>
-                    @endforeach
-                    
-                </div>
+    <div class="">
+    @foreach ($products as $product)
+        <div class="product-item">
+            <a href="/products/{{ $product->id }}"><img src="{{ asset('storage/images/' . $product->img) }}"></a>
+            <!-- <a href="/products/{{ $product->id }}"><img src="{{ $product->img }}"></a> -->
+            <div class="product-list">
+                <h3>{{ $product->name }}</h3>
+                <span class="price">{{ $product->prize/100 }}$</span>
+                <a href="/products/{{ $product->id }}"  class="button"> Description</a>
+                &nbsp;
+                &nbsp;
+                @if(Auth::check())
+                    <a href="{{ url('/makeOrder?OrderNum='. $product->id) }}" class="button">Make order</a>
+                @else
+                    <a href="{{ url('/login') }}" class="button">Login to order</a>
+                @endif
             </div>
         </div>
+    @endforeach
     </div>
+
 </div>
+
 @endsection
 

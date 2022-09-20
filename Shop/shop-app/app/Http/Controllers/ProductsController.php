@@ -11,6 +11,7 @@ class ProductsController extends Controller
     public function productById($id)
     {
         $product = Product::findOrFail($id);
+
         return view('product',[
             'product' => $product,
             'categories' => $product->categories()->get()]);
@@ -23,6 +24,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
+
         return view('products',['products' => Product::all()]);
     }
 

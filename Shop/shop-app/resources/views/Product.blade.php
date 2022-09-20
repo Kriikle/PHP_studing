@@ -30,16 +30,15 @@
                         </p>
 
                             <p>Prize: {{ $product->prize / 100 }}$</p>
-                            <img src="{{ $product->img }}">
+                            <img src="{{ asset('storage/images/' . $product->img) }}">
                         <p> Description: <br>
                             {{ $product->description }}
                         </p>
                             <hr>
-                        @if (Auth::check())
-                            <form method="post" >
-
-                            </form>
-                        <a href="{{ url('/makeOrder?OrderNum='. $product->id) }}"><button> Make order </button></a>
+                        @if(Auth::check())
+                            <a href="{{ url('/makeOrder?OrderNum='. $product->id) }}" class="button">Make order</a>
+                        @else
+                            <a href="{{ url('/login') }}" class="button">Login to order</a>
                         @endif
                     </div>
                 </div>
