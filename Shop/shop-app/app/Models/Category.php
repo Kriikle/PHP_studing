@@ -9,11 +9,16 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function categories()
+    public function products()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Product::class);
     }
 }
