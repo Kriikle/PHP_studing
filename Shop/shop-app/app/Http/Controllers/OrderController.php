@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,10 +39,15 @@ class OrderController extends Controller
     }
 
 
+
     public function myOrders()
     {
+        if(Auth::check()){
 
-        return view('myOrders',['orders' =>  Auth::user()->getMyOrders()->get()]);
+            return view('myOrders',['orders' =>  Auth::user()->getMyOrders()->get()]);
+        }
+
+        return redirect('login');
     }
 
 }

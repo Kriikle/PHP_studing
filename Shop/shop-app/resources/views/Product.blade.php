@@ -24,7 +24,7 @@
                         <p> Categories:
                         @foreach ($categories as $category)
                                 &nbsp; ||
-                            <a href=" {{ url('api/Category/'.$category->id)  }}">{{ $category->name }}</a>
+                                <a  href=" {{ url('CategoryProducts/'.$category->id)  }}">{{ $category->name }}</a>
                                 ||
                         @endforeach
                         </p>

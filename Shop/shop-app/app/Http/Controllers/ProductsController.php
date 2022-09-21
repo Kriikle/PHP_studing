@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+
+    public function CategoryProducts($id)
+    {
+        $category = Category::find($id);
+        return view('products',[
+            'products' => $category->products,
+            'categories' => Category::all()
+        ]);
+    }
 
     public function productById($id)
     {
@@ -25,7 +35,10 @@ class ProductsController extends Controller
     public function index()
     {
 
-        return view('products',['products' => Product::all()]);
+        return view('products',[
+            'products' => Product::all(),
+            'categories' => Category::all()
+        ]);
     }
 
 

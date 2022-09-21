@@ -5,8 +5,17 @@
 
 
     @vite(['resources/css/Catalog.css'])
-
-
+<div style="background-color: #f8fafc;padding-left: 20px" >
+    <p style="margin-left: 50px">
+        Chose your category:
+    </p>
+    || <a  href=" {{ url('products/')  }}">All categories</a> ||
+    @foreach ($categories as $category)
+        &nbsp; ||
+        <a  href=" {{ url('CategoryProducts/'.$category->id)  }}">{{ $category->name }}</a>
+        ||
+    @endforeach
+</div>
 
 <div class="container">
     <div class="">
