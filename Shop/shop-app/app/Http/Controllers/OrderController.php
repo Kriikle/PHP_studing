@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Order;
 use App\Models\Product;
-use http\Client\Curl\User;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
     public function makeOrder(Request $request)
     {
+
         $input = $request->all();
         $order = new Order([
             'user_id' => Auth::id(),
@@ -19,10 +23,20 @@ class OrderController extends Controller
             'status' => 'consideration',
             'prize' => Product::find($input['OrderNum'])->prize
         ]);
-        $order->save();
+        //$order->save();
+        foreach (Admin::all() as $user){
+            try {
+                $user = User::find($user->user_id);
+                Mail::send('mailOrderPush', ['order' => $order], function ($m) use ($user) {
+                    //$m->from('Shop@app.com', 'Shop');
+                    $m->to($user->email, $user->name)->subject('Your Reminder!');
+                });
+            } catch (Exception $e) {
+                //var_dump($e->getMessage());
+            }
+        }
 
         return redirect(url('/cart'));
-
     }
 
     public function cancelOrder()
